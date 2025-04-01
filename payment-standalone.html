@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    .wrapper {
+      width: 750px;
+      gap: 64px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      position: relative;
+    }
+    .titleWrapper {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+    .title {
+      color: #f5ce7e;
+      font-size: 64px;
+      font-weight: 500;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .subtitle {
+      color: #f5ce7e;
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+    .order {
+      width: 100%;
+      display: grid;
+      align-items: center;
+      justify-content: space-between;
+      row-gap: 30px;
+      grid-template-areas:
+        'image orderContent'
+        'button button';
+    }
+    .orderContent {
+      gap: 4px;
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+      grid-area: orderContent;
+    }
+    .orderTitle {
+      color: #f5ce7e;
+      font-size: 64px;
+      font-weight: 500;
+    }
+    .orderDescription {
+      color: #f5ce7e;
+      font-size: 20px;
+    }
+    .image {
+      width: 270px;
+      height: 240px;
+      border-radius: 24px;
+      grid-area: image;
+      object-fit: cover;
+    }
+    .button {
+      padding: 8px 24px;
+      border-radius: 100px;
+      background: #f5ce7e;
+      color: #05291d;
+      font-size: 16px;
+      border: 1px solid #05291d;
+      cursor: pointer;
+      transition: 0.3s all;
+    }
+    .button:hover {
+      background: #05291d;
+      color: #f5ce7e;
+      border: 1px solid #f5ce7e;
+    }
+    .blur {
+      position: absolute;
+      z-index: -1;
+      width: 150%;
+      height: 120%;
+      left: -25%;
+      bottom: -50%;
+      border-radius: 50%;
+      background: #05291d;
+      filter: blur(150px);
+    }
+  </style>
+</head>
+<body class="bg-black text-white p-8">
+  <section class="wrapper">
+    <div class="titleWrapper">
+      <p class="title">Total order</p>
+      <p class="subtitle">Time until payment expires</p>
+      <div id="timer">30:00</div>
+    </div>
+    <div class="order">
+      <img class="image" src="https://via.placeholder.com/270x240" alt="Model">
+      <div class="orderContent">
+        <p class="orderTitle">Name</p>
+        <div class="flex text-yellow-400">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="far fa-star"></i>
+        </div>
+        <p class="orderDescription">Lorem Ipsum is simply dummy text</p>
+      </div>
+      <div class="paymentOptions grid gap-4">
+        <button 
+          class="button"
+          onclick="handlePayment('crypto')"
+        >
+          Pay via crypto wallet
+        </button>
+        <button 
+          class="button"
+          onclick="handlePayment('cosmopayment')"
+        >
+          Pay via Cosmopayment
+        </button>
+      </div>
+    </div>
+    <div class="blur"></div>
+  </section>
+
+  <script>
+    // Timer functionality
+    let timeLeft = 30 * 60; // 30 minutes in seconds
+    const timerElement = document.getElementById('timer');
+    
+    const updateTimer = () => {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+      
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        timerElement.textContent = "Expired";
+      } else {
+        timeLeft--;
+      }
+    };
+    
+    const timerInterval = setInterval(updateTimer, 1000);
+    updateTimer();
+
+    // Payment handler
+    function handlePayment(provider) {
+      console.log('Initiating payment with:', provider);
+      // TODO: Add actual payment initiation logic
+      alert(`Initiating ${provider} payment`);
+    }
+  </script>
+</body>
+</html>
